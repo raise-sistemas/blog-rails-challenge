@@ -9,6 +9,9 @@
     <!-- Google Fonts -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 
+    <!-- Tailwind 2.x -->
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
     <!-- CSS Reset -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
 
@@ -20,6 +23,12 @@
   </head>
 
   <body>
-    <%= yield %>
+  <div class="bg-purple-100 p-4 m-4">
+    <%= link_to "admin", posts_path, class: "float-right button button-clear" %>
+    <h4 class="m-0"><%= link_to "Blog Rails App", root_path %></h4>
+  </div>
+    <div class="container">
+      <%= yield %>
+    </div>
   </body>
 </html>
