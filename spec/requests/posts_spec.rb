@@ -29,10 +29,24 @@ RSpec.describe "/posts", type: :request do
     }
   }
 
+  describe "GET /" do
+    it "renders a successful response" do
+      get root_url
+      expect(response).to be_successful
+    end
+  end
+
   describe "GET /index" do
     it "renders a successful response" do
       Post.create! valid_attributes
       get posts_url
+      expect(response).to be_successful
+    end
+  end
+
+  describe "GET /posts/published" do
+    it "renders a successful response" do
+      get published_posts_url
       expect(response).to be_successful
     end
   end
