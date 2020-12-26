@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>BlogApp</title>
+    <title>Blog Rails Challenge</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -18,16 +18,15 @@
     <!-- Milligram CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
 
-    <%= stylesheet_link_tag "application", media: "all", 'data-turbolinks-track': "reload" %>
     <%= javascript_pack_tag "application", 'data-turbolinks-track': "reload" %>
   </head>
 
-  <body>
+  <body class="bg-indigo-50">
   <div class="bg-purple-100 p-4 m-4">
     <%= link_to "admin", posts_path, class: "float-right button button-clear" %>
-    <h4 class="m-0"><%= link_to "Blog Rails App", root_path %></h4>
+    <h4 class="m-0"><%= link_to "Blog Rails Challenge", root_path %></h4>
   </div>
-    <div class="container">
+    <div class="container bg-indigo-100">
       <%= yield %>
     </div>
   </body>
