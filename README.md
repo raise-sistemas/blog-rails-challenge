@@ -1,5 +1,7 @@
 # Desafio Ruby on Rails
 
+Versão demo: https://blog-rails-challenge.herokuapp.com/
+
 Para executar esse desafio é muito simples:
 
 1. Faça um fork deste projeto na sua conta do github
