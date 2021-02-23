@@ -10,7 +10,7 @@ class PostsController < ApplicationController
   # GET /posts/published
   # GET /posts/published.json
   def published
-    @posts = Post.all.order(created_at: :desc)
+    @posts = Post.all.order(created_at: :desc) # Add posts desc order by created_at
   end
 
   # GET /posts/1
