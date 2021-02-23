@@ -17,13 +17,14 @@ Para executar esse desafio é muito simples:
 
 Este teste busca simular uma situação real de trabalho, por isso, os seguintes ítens serão avaliados:
 
-1. Organização dos commits. Eles devem contar a história da sua feature, separando-os de forma organizada para facilitar o review do código.
-2. As mensagens de commit devem ser explicativas.
-3. Coloque comentários no código explicando o funcionamento e o motivo de determinada decisão.
-4. Nomes sempre em inglês.
-5. Organização de código seguindo as melhores práticas Ruby/Rails.
-6. Testes que realmente validam a feature.
-7. Não ter brechas de segurança.
-8. Por último mas não menos importante, **performance**, sabendo utilizar os recursos que o Rails oferece para evitar n+1, etc. 
+1. Não utilizar gems.
+2. Organização dos commits. Eles devem contar a história da sua feature, separando-os de forma organizada para facilitar o review do código.
+3. As mensagens de commit devem ser explicativas.
+4. Coloque comentários no código explicando o funcionamento e o motivo de determinada decisão.
+5. Nomes sempre em inglês.
+6. Organização de código seguindo as melhores práticas Ruby/Rails.
+7. Testes que realmente validam a feature.
+8. Não ter brechas de segurança.
+9. Por último mas não menos importante, **performance**, sabendo utilizar os recursos que o Rails oferece para evitar n+1, etc. 
 
 **Boa Sorte!**
