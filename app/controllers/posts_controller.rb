@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  # Before action including http authentication for post modification actions
   before_action :authenticate, :except => [:index, :published, :show]
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   POSTS_PER_PAGE = 4
@@ -83,7 +84,7 @@ class PostsController < ApplicationController
   end
 
   protected
-
+  # Creates a simple authentication method
   def authenticate
     authenticate_or_request_with_http_basic do |username, password|
       username = "editor" && password = "4dm1in"
