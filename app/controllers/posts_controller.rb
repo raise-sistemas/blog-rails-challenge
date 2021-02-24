@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  POSTS_PER_PAGE = 4
 
   # GET /posts
   # GET /posts.json
@@ -10,7 +11,8 @@ class PostsController < ApplicationController
   # GET /posts/published
   # GET /posts/published.json
   def published
-    @posts = Post.all.order(created_at: :desc)
+    @page = params.fetch(:page, 0).to_i # Add page variable for default value and offset usage
+    @posts = Post.all.order(created_at: :desc).offset(@page * POSTS_PER_PAGE).limit(POSTS_PER_PAGE) # Add posts display limit and offset starting point
   end
 
   # GET /posts/1
