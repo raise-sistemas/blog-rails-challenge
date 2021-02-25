@@ -2,7 +2,6 @@ class PostsController < ApplicationController
   # Before action including http authentication for post modification actions
   before_action :authenticate, :except => [:index, :published, :show]
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-  POSTS_PER_PAGE = 4
 
   # GET /posts
   # GET /posts.json
@@ -13,8 +12,7 @@ class PostsController < ApplicationController
   # GET /posts/published
   # GET /posts/published.json
   def published
-    @page = params.fetch(:page, 1).to_i # Add page variable for default value and offset usage
-    @posts = Post.all.order(created_at: :desc).offset((@page - 1) * POSTS_PER_PAGE).limit(POSTS_PER_PAGE) # Add posts display limit and offset starting point
+    @posts = Post.all
   end
 
   # GET /posts/1
