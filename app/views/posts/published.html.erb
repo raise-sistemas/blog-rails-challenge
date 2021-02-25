@@ -1,9 +1,2 @@
 <%= render @posts %>
-<%# Add previous page button with display condition %>
-<% if @page > 1 %>
-  <%= link_to "Previous Page", root_path(page: @page - 1), class: "button" %>
-<% end %>
-<%# Add next page button with display condition %>
-<% if @posts.count >= 4 %>
-  <%= link_to "Next Page", root_path(page: @page + 1), class: "button" %>
-<% end %>
+<%= render 'pagination' %>
