@@ -1,7 +1,7 @@
 class Post < ApplicationRecord
   validates :title, :body, presence: true
 
-  # Add parameterize for url customization
+  # Returns a String, which Action Pack uses for constructing an URL to this object.
   def to_param
     "#{id}-#{title.parameterize}"
   end
