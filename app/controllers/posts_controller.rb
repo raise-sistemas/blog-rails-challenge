@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   # Before action including http authentication for post modification actions
-  before_action :authenticate, :except => [:index, :published, :show]
+  before_action :authenticate, except: [:index, :published, :show]
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   # GET /posts
