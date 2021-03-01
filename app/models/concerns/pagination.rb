@@ -7,7 +7,7 @@ module Pagination
 
   class_methods do
     def post_pagination(page)
-      @posts = Post.all.offset((page - 1) * POSTS_PER_PAGE).limit(POSTS_PER_PAGE) # Add posts display limit and offset starting point
+      Post.all.offset((page - 1) * POSTS_PER_PAGE).limit(POSTS_PER_PAGE) # Add posts display limit and offset starting point
     end
   end
 end
