@@ -2,5 +2,6 @@
 
 <%= render 'form', post: @post %>
 
+<%= link_to 'Publish', publish_post_path(@post), class: 'button', method: :patch %>
 <%= link_to 'Show', @post %> |
 <%= link_to 'Back', posts_path %>
