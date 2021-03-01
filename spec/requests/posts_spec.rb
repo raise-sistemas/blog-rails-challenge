@@ -139,6 +139,7 @@ RSpec.describe "/posts", type: :request do
 
   describe "PATCH /publish" do
     it "update publihed_at attribute of requested post" do
+      # Teste a rota de publicação de Post
       post = Post.create! valid_attributes
       patch publish_post_url(post)
       expect(response).to redirect_to(post_url(post))

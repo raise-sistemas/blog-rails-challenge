@@ -70,6 +70,7 @@ class PostsController < ApplicationController
   # PATCH /posts/1/published
   # PATCH /posts/1/published.json
   def publish
+    # Atualiza a data de publicação do Post com dia/horário atual
     respond_to do |format|
       if @post.update(published_at: Time.now)
         format.html { redirect_to @post, notice: "Post was successfully published." }
