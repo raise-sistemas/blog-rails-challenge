@@ -10,7 +10,7 @@ class PostsController < ApplicationController
   # GET /posts/published
   # GET /posts/published.json
   def published
-    @posts = Post.all
+    @posts = Post.published
   end
 
   # GET /posts/1
@@ -67,6 +67,8 @@ class PostsController < ApplicationController
     end
   end
 
+  # PATCH /posts/1/published
+  # PATCH /posts/1/published.json
   def publish
     respond_to do |format|
       if @post.update(published_at: Time.now)
