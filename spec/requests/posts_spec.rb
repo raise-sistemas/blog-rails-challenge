@@ -19,6 +19,7 @@ RSpec.describe "/posts", type: :request do
     {
       title: "Title Ok",
       body: "Body Ok",
+      published_at: nil
     }
   }
 
@@ -133,6 +134,14 @@ RSpec.describe "/posts", type: :request do
         patch post_url(post), params: { post: invalid_attributes }
         expect(response).to be_successful
       end
+    end
+  end
+
+  describe "PATCH /publish" do
+    it "update publihed_at attribute of requested post" do
+      post = Post.create! valid_attributes
+      patch publish_post_url(post)
+      expect(response).to redirect_to(post_url(post))
     end
   end
 

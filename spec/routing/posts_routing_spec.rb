@@ -41,5 +41,9 @@ RSpec.describe PostsController, type: :routing do
     it "routes to #destroy" do
       expect(delete: "/posts/1").to route_to("posts#destroy", id: "1")
     end
+
+    it "routes to #publish" do
+      expect(patch: "/posts/1/publish").to route_to("posts#publish", id: "1")
+    end
   end
 end
