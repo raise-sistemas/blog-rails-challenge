@@ -10,7 +10,8 @@ class PostsController < ApplicationController
   # GET /posts/published
   # GET /posts/published.json
   def published
-    @posts = Post.all
+    @page = params.fetch(:page, 1).to_i # Add page variable for default value and offset usage
+    @posts = Post.pagination(@page)
   end
 
   # GET /posts/1
