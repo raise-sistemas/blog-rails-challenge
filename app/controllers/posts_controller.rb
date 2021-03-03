@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :publish]
 
   # GET /posts
   # GET /posts.json
@@ -10,7 +10,7 @@ class PostsController < ApplicationController
   # GET /posts/published
   # GET /posts/published.json
   def published
-    @posts = Post.all
+    @posts = Post.published
   end
 
   # GET /posts/1
@@ -64,6 +64,17 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  # PATCH /posts/1/published
+  # PATCH /posts/1/published.json
+  def publish
+    # Atualiza a data de publicação do Post com dia/horário atual
+    @post.publish!
+    respond_to do |format|
+      format.html { redirect_to @post, notice: "Post was successfully published." }
+      format.json { render :show, status: :ok, location: @post }
     end
   end
 
