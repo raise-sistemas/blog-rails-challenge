@@ -10,7 +10,8 @@ class PostsController < ApplicationController
   # GET /posts/published
   # GET /posts/published.json
   def published
-    @posts = Post.all
+    paginate(Post)
+    @posts = Post.paginate(page: @page)
   end
 
   # GET /posts/1
