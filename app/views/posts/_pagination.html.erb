@@ -1,0 +1,2 @@
+<%= link_to 'Anterior', published_posts_path(page: page - 1) if page > 1 %>
+<%= link_to 'Próxima', published_posts_path(page: page + 1) if have_next %>
