@@ -29,6 +29,12 @@ RSpec.describe "/posts", type: :request do
     }
   }
 
+  before(:each) do
+    user = 'editor'
+    passwd = '4dm1n'
+    request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(user,passwd)
+  end
+
   describe "GET /" do
     it "renders a successful response" do
       get root_url
