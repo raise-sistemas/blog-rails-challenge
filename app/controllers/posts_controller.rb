@@ -4,6 +4,9 @@ class PostsController < ApplicationController
   # Authenticate with basic http request before every other action except index, published and show
   before_action :authenticate, except: [:index, :published, :show]
 
+  # Set page param before published action
+  before_action :set_page, only: [:published]
+
   # GET /posts
   # GET /posts.json
   def index
@@ -13,8 +16,8 @@ class PostsController < ApplicationController
   # GET /posts/published
   # GET /posts/published.json
   def published
-    # Get published posts ordered descending by created_at (DateTime) column
-    @posts = Post.order(created_at: :desc)
+    @posts = Post.order_by_and_paginate(@page, POSTS_PER_PAGE)
+    @has_next = Post.order_by_and_paginate(@page + 1, POSTS_PER_PAGE).any?
   end
 
   # GET /posts/1
@@ -88,5 +91,9 @@ class PostsController < ApplicationController
     authenticate_or_request_with_http_basic do |user, passwd|
       user = "editor" && passwd = "4dm1n"
     end
+  end
+
+  def set_page
+    @page = params[:page] ? params[:page].to_i : 1
   end
 end
