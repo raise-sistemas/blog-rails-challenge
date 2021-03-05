@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :publish]
 
   # Authenticate with basic http request before every other action except index, published and show
   before_action :authenticate, except: [:index, :published, :show]
@@ -17,8 +17,8 @@ class PostsController < ApplicationController
   # GET /posts/published.json
   def published
     # TODO: create scopes for @posts and @has_next
-    @posts = Post.order_by_and_paginate(@page, POSTS_PER_PAGE)
-    @has_next = Post.order_by_and_paginate(@page + 1, POSTS_PER_PAGE).any?
+    @posts = Post.published(@page, POSTS_PER_PAGE)
+    @has_next = Post.published(@page + 1, POSTS_PER_PAGE).any?
   end
 
   # GET /posts/1
@@ -75,6 +75,17 @@ class PostsController < ApplicationController
     end
   end
 
+  # PATCH /posts/1/published
+  # PATCH /posts/1/published.json
+  def publish
+    # Updates published_at with current datetime
+    @post.publish
+    respond_to do |format|
+      format.html { redirect_to published_posts_url, notice: "Post was successfully published." }
+      format.json { render :show, status: :ok, location: @post }
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -84,7 +95,7 @@ class PostsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def post_params
-    params.require(:post).permit(:title, :body)
+    params.require(:post).permit(:title, :body, :created_at, :published_at)
   end
 
   # Basic http request with credentials "editor:4dm1n"
