@@ -16,6 +16,7 @@ class PostsController < ApplicationController
   # GET /posts/published
   # GET /posts/published.json
   def published
+    # TODO: create scopes for @posts and @has_next
     @posts = Post.order_by_and_paginate(@page, POSTS_PER_PAGE)
     @has_next = Post.order_by_and_paginate(@page + 1, POSTS_PER_PAGE).any?
   end
