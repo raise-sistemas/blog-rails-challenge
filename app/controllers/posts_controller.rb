@@ -83,6 +83,7 @@ class PostsController < ApplicationController
     params.require(:post).permit(:title, :body)
   end
 
+  # Basic http request with credentials "editor:4dm1n"
   def authenticate
     authenticate_or_request_with_http_basic do |user, passwd|
       user = "editor" && passwd = "4dm1n"
