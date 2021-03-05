@@ -21,5 +21,8 @@ test:
   database: db/test.sqlite3
 
 production:
-  <<: *default
-  database: db/production.sqlite3
+#  <<: *default
+#  database: blog_rails_challenge_production
+#  username: blog_rails_challenge
+#  password: postgres
+url: <%= ENV['DATABASE_URL'] %> # For heroku deployment

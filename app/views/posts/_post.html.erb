@@ -1,5 +1,5 @@
 <div id="post_<%= post.id %>">
-  <em class="float-right"><%= post.created_at %></em>
+  <em class="float-right"><%= post.published_at %></em>
   <h2><%= link_to post.title, post %></h2>
   <blockquote>
     <%= simple_format(post.body) %>
