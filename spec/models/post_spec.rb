@@ -19,7 +19,7 @@ RSpec.describe Post, type: :model do
       end
 
       context 'shold allow null value' do
-        before do 
+        before do
           @post = Post.new(title: 'New Title', body: 'New Body', published_at: nil)
           @post.save!
         end
@@ -37,6 +37,26 @@ RSpec.describe Post, type: :model do
 
         it { expect(@post).to be_valid }
         it { expect(@post.published_at).to eq DateTime.current }
+      end
+    end
+
+    describe 'status' do
+      context 'when create object the status must be unpublished' do
+        before do
+          @post = Post.new(title: 'New Title', body: 'New Body')
+        end
+
+        it { expect(@post).to be_valid }
+        it { expect(@post.unpublished?).to be_truthy }
+      end
+
+      context 'shold allow for change status to published' do
+        before do
+          @post = Post.new(title: 'New Title', body: 'New Body', status: :published)
+        end
+
+        it { expect(@post).to be_valid }
+        it { expect(@post.published?).to be_truthy }
       end
     end
   end
