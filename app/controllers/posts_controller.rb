@@ -17,6 +17,7 @@ class PostsController < ApplicationController
   def publish
     @post.publish
     @post.save
+    redirect_to @post, notice: 'Post published successfully!' 
   end
 
   # GET /posts/1
