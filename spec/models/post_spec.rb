@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
+  subject(:post) { described_class.create(title: 'New Title', body: 'New Body') } 
+
   describe 'validations' do
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:body) }
@@ -9,13 +11,8 @@ RSpec.describe Post, type: :model do
   context 'create object with correct values' do
     describe 'published_at' do
       context 'when it is not defined, it must have the default value' do
-        before do
-          @post = Post.new(title: 'New Title', body: 'New Body')
-          @post.save!
-        end
-
-        it { expect(@post).to be_valid }
-        it { expect(@post.published_at).to be_a Time }
+        it { expect(post).to be_valid }
+        it { expect(post.published_at).to be_a Time }
       end
 
       context 'shold allow null value' do
@@ -42,12 +39,8 @@ RSpec.describe Post, type: :model do
 
     describe 'status' do
       context 'when create object the status must be unpublished' do
-        before do
-          @post = Post.new(title: 'New Title', body: 'New Body')
-        end
-
-        it { expect(@post).to be_valid }
-        it { expect(@post.unpublished?).to be_truthy }
+        it { expect(post).to be_valid }
+        it { expect(post.unpublished?).to be_truthy }
       end
 
       context 'shold allow for change status to published' do
