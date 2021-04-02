@@ -137,7 +137,7 @@ RSpec.describe "/posts", type: :request do
   end
 
   describe 'PATCH /posts/:id/publish' do
-    context 'post published successfully' do
+    context 'Post published successfully' do
       context 'change state Post to publish' do
         before do
           @date_time_current = DateTime.current.strftime('%F %T %z')
@@ -157,6 +157,16 @@ RSpec.describe "/posts", type: :request do
         post = Post.create! valid_attributes
         expect { patch publish_post_url(post) }.to change(Post, :count).by(0)
       end    
+    end
+
+    context 'error when posting post' do
+      before do
+        @post = Post.create valid_attributes
+        allow_any_instance_of(Post).to receive(:save).and_return(false)
+        patch publish_post_url(@post)
+      end
+
+      it { expect(response).to redirect_to(edit_post_url(@post)) }
     end
   end
 

@@ -16,8 +16,12 @@ class PostsController < ApplicationController
   # PATCH/PUT /posts/1/publish
   def publish
     @post.publish
-    @post.save
-    redirect_to @post, notice: 'Post published successfully!' 
+
+    if @post.save
+      redirect_to @post, notice: 'Post published successfully!'
+    else
+      redirect_to edit_post_path(@post), alert: 'Post unpublished!'
+    end
   end
 
   # GET /posts/1
