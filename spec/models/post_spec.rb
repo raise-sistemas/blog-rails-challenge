@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  subject(:post) { described_class.create(title: 'New Title', body: 'New Body') } 
+  subject(:post) { described_class.create(title: 'New Title', body: 'New Body') }
+  let(:mock_date_time) { allow(DateTime).to receive(:current).and_return(DateTime.current) }
 
   describe 'validations' do
     it { should validate_presence_of(:title) }
@@ -27,7 +28,7 @@ RSpec.describe Post, type: :model do
 
       context 'shold allow DateTime values' do
         before do
-          allow(DateTime).to receive(:current).and_return(DateTime.current)
+          mock_date_time
           @post = Post.new(title: 'New Title', body: 'New Body', published_at: DateTime.current)
           @post.save!
         end
@@ -50,6 +51,24 @@ RSpec.describe Post, type: :model do
 
         it { expect(@post).to be_valid }
         it { expect(@post.published?).to be_truthy }
+      end
+    end
+
+    describe '#publish' do
+      context 'shold publish the post' do
+        before do
+          mock_date_time
+          @post = Post.new(title: 'New Title', body: 'New Body')
+          @post.publish
+        end
+
+        context 'change status field to published' do
+          it { expect(@post.published?).to be_truthy }
+        end
+
+        context 'change published_at field to current Time' do
+          it { expect(@post.published_at).to eq DateTime.current }
+        end
       end
     end
   end
