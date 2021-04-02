@@ -17,6 +17,16 @@ RSpec.describe Post, type: :model do
         it { expect(@post).to be_valid }
         it { expect(@post.published_at).to be_a Time }
       end
+
+      context 'shold allow null value' do
+        before do 
+          @post = Post.new(title: 'New Title', body: 'New Body', published_at: nil)
+          @post.save!
+        end
+
+        it { expect(@post).to be_valid }
+        it { expect(@post.published_at).to eq nil }
+      end
     end
   end
 end
