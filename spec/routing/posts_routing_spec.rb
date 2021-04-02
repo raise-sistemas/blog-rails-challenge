@@ -5,6 +5,10 @@ RSpec.describe PostsController, type: :routing do
     it "routes root to posts#published" do
       expect(get: "/").to route_to("posts#published")
     end
+    
+    it "routes to #publish" do
+      expect(patch: "/posts/1/publish").to route_to("posts#publish", id: "1")
+    end
 
     it "routes to #index" do
       expect(get: "/posts").to route_to("posts#index")
