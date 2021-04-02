@@ -136,6 +136,29 @@ RSpec.describe "/posts", type: :request do
     end
   end
 
+  describe "PATCH /posts/:id/publish" do
+    context "with valid parameters" do
+
+      context 'change state Post to publish' do
+        before do
+          @date_time_current = DateTime.current.strftime('%F %T %z')
+          allow(DateTime).to receive(:current).and_return(@date_time_current)
+          @post = Post.create! valid_attributes
+          patch publish_post_url(@post)
+          @post.reload
+        end
+
+        it { expect(@post.status).to eq 'published' }
+        it { expect(@post.published_at).to eq @date_time_current }
+      end
+
+      it 'update the requested post' do
+        post = Post.create! valid_attributes
+        expect { patch publish_post_url(post) }.to change(Post, :count).by(0)
+      end
+    end
+  end
+
   describe "DELETE /destroy" do
     it "destroys the requested post" do
       post = Post.create! valid_attributes

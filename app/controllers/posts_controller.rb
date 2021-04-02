@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :publish]
 
   # GET /posts
   # GET /posts.json
@@ -11,6 +11,12 @@ class PostsController < ApplicationController
   # GET /posts/published.json
   def published
     @posts = Post.all
+  end
+
+  # PATCH/PUT /posts/1/publish
+  def publish
+    @post.publish
+    @post.save
   end
 
   # GET /posts/1
