@@ -27,6 +27,17 @@ RSpec.describe Post, type: :model do
         it { expect(@post).to be_valid }
         it { expect(@post.published_at).to eq nil }
       end
+
+      context 'shold allow DateTime values' do
+        before do
+          allow(DateTime).to receive(:current).and_return(DateTime.current)
+          @post = Post.new(title: 'New Title', body: 'New Body', published_at: DateTime.current)
+          @post.save!
+        end
+
+        it { expect(@post).to be_valid }
+        it { expect(@post.published_at).to eq DateTime.current }
+      end
     end
   end
 end
