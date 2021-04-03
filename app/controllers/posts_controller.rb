@@ -20,7 +20,7 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to published_posts_path, notice: 'Post published successfully!'
     else
-      redirect_to edit_post_path(@post), alert: 'Post unpublished!'
+      redirect_to edit_post_path(@post), notice: 'Post unpublished!'
     end
   end
 
