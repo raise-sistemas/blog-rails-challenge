@@ -150,7 +150,7 @@ RSpec.describe "/posts", type: :request do
         it { expect(@post.status).to eq 'published' }
         it { expect(@post.published_at).to eq @date_time_current }
         it { expect(response).to have_http_status(:found) }
-        it { expect(response).to redirect_to(post_url(@post)) }
+        it { expect(response).to redirect_to(published_posts_url) }
       end
 
       it 'update the requested post' do
