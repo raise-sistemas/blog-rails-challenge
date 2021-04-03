@@ -10,7 +10,7 @@ class PostsController < ApplicationController
   # GET /posts/published
   # GET /posts/published.json
   def published
-    @posts = Post.all
+    @posts = Post.published
   end
 
   # PATCH/PUT /posts/1/publish

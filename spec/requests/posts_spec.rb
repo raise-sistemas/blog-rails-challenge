@@ -49,6 +49,27 @@ RSpec.describe "/posts", type: :request do
       get published_posts_url
       expect(response).to be_successful
     end
+
+    context 'returns only published posts' do
+      let(:posts) do
+        [
+          Post.new(title: 'New Post 1', body: 'Content Body'),
+          Post.new(title: 'New Post 2', body: 'Content Body', status: :published),
+          Post.new(title: 'New Post 3', body: 'Content Body'),
+          Post.new(title: 'New Post 4', body: 'Content Body', status: :published)
+        ]
+      end
+
+      before do
+        posts.each(&:save)
+        get published_posts_url
+      end
+
+      it { expect(response.body).to include('New Post 2') }
+      it { expect(response.body).to include('New Post 4') }
+      it { expect(response.body).to_not include('New Post 1') }
+      it { expect(response.body).to_not include('New Post 3') }
+    end
   end
 
   describe "GET /show" do
