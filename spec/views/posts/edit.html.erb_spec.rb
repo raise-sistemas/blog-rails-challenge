@@ -18,4 +18,11 @@ RSpec.describe "posts/edit", type: :view do
       assert_select "textarea[name=?]", "post[body]"
     end
   end
+  
+  it "renders the publish post form" do
+    render
+
+    assert_select "form[action=?][method=?]", publish_post_path(@post), "post" do
+    end
+  end
 end
