@@ -15,6 +15,8 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1/publish
   def publish
+    # this method to change the state of the post to published
+    # set status to published and set published_at with DateTime.current
     @post.publish
 
     if @post.save
