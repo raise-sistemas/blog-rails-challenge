@@ -37,10 +37,20 @@ RSpec.describe "/posts", type: :request do
   end
 
   describe "GET /index" do
-    it "renders a successful response" do
-      Post.create! valid_attributes
-      get posts_url
-      expect(response).to be_successful
+    before do
+      posts = []
+      (1..10).each do |value|
+        posts << Post.new(title: "New Post #{value}", body: 'Content Body')
+      end
+
+      posts.each(&:save)
+      get published_posts_url
+    end
+
+    context 'paginate' do
+      it 'renders a successful response' do
+        expect(response).to be_successful
+      end
     end
   end
 
@@ -48,6 +58,27 @@ RSpec.describe "/posts", type: :request do
     it "renders a successful response" do
       get published_posts_url
       expect(response).to be_successful
+    end
+
+    context 'returns only published posts' do
+      let(:posts) do
+        [
+          Post.new(title: 'New Post 1', body: 'Content Body'),
+          Post.new(title: 'New Post 2', body: 'Content Body', status: :published),
+          Post.new(title: 'New Post 3', body: 'Content Body'),
+          Post.new(title: 'New Post 4', body: 'Content Body', status: :published)
+        ]
+      end
+
+      before do
+        posts.each(&:save)
+        get published_posts_url
+      end
+
+      it { expect(response.body).to include('New Post 2') }
+      it { expect(response.body).to include('New Post 4') }
+      it { expect(response.body).to_not include('New Post 1') }
+      it { expect(response.body).to_not include('New Post 3') }
     end
   end
 
@@ -133,6 +164,40 @@ RSpec.describe "/posts", type: :request do
         patch post_url(post), params: { post: invalid_attributes }
         expect(response).to be_successful
       end
+    end
+  end
+
+  describe 'PATCH /posts/:id/publish' do
+    context 'Post published successfully' do
+      context 'change state Post to publish' do
+        before do
+          @date_time_current = DateTime.current.strftime('%F %T %z')
+          allow(DateTime).to receive(:current).and_return(@date_time_current)
+          @post = Post.create! valid_attributes
+          patch publish_post_url(@post)
+          @post.reload
+        end
+        
+        it { expect(@post.status).to eq 'published' }
+        it { expect(@post.published_at).to eq @date_time_current }
+        it { expect(response).to have_http_status(:found) }
+        it { expect(response).to redirect_to(published_posts_url) }
+      end
+
+      it 'update the requested post' do
+        post = Post.create! valid_attributes
+        expect { patch publish_post_url(post) }.to change(Post, :count).by(0)
+      end    
+    end
+
+    context 'error when posting post' do
+      before do
+        @post = Post.create valid_attributes
+        allow_any_instance_of(Post).to receive(:save).and_return(false)
+        patch publish_post_url(@post)
+      end
+
+      it { expect(response).to redirect_to(edit_post_url(@post)) }
     end
   end
 

@@ -1,6 +1,11 @@
+<p id="notice"><%= notice %></p>
 <h1>Editing Post</h1>
 
 <%= render 'form', post: @post %>
+
+<%= form_tag publish_post_path(@post), method: :patch do -%>
+  <%= submit_tag 'Publish' -%>
+<%end%>
 
 <%= link_to 'Show', @post %> |
 <%= link_to 'Back', posts_path %>
