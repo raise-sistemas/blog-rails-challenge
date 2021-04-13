@@ -37,10 +37,20 @@ RSpec.describe "/posts", type: :request do
   end
 
   describe "GET /index" do
-    it "renders a successful response" do
-      Post.create! valid_attributes
-      get posts_url
-      expect(response).to be_successful
+    before do
+      posts = []
+      (1..10).each do |value|
+        posts << Post.new(title: "New Post #{value}", body: 'Content Body')
+      end
+
+      posts.each(&:save)
+      get published_posts_url
+    end
+
+    context 'paginate' do
+      it 'renders a successful response' do
+        expect(response).to be_successful
+      end
     end
   end
 

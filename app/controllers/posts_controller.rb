@@ -1,10 +1,13 @@
 class PostsController < ApplicationController
+  # include concerns Paginable to paging functionality between controls
+  include Paginable
   before_action :set_post, only: [:show, :edit, :update, :destroy, :publish]
 
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    # this method returns a query with 4 records by page
+    @posts = paginate(paginate_params[:page], Post)
   end
 
   # GET /posts/published
@@ -82,6 +85,10 @@ class PostsController < ApplicationController
 
   private
 
+  def paginate_params
+    params.permit(:page)
+  end
+  
   # Use callbacks to share common setup or constraints between actions.
   def set_post
     @post = Post.find(params[:id])
