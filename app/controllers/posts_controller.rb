@@ -1,16 +1,32 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  # include concerns Paginable to paging functionality between controls
+  include Paginable
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :publish]
 
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    # this method returns a query with 4 records by page
+    @posts = paginate(paginate_params[:page], Post)
   end
 
   # GET /posts/published
   # GET /posts/published.json
   def published
-    @posts = Post.all
+    @posts = Post.published
+  end
+
+  # PATCH/PUT /posts/1/publish
+  def publish
+    # this method to change the state of the post to published
+    # set status to published and set published_at with DateTime.current
+    @post.publish
+
+    if @post.save
+      redirect_to published_posts_path, notice: 'Post published successfully!'
+    else
+      redirect_to edit_post_path(@post), notice: 'Post unpublished!'
+    end
   end
 
   # GET /posts/1
@@ -69,6 +85,10 @@ class PostsController < ApplicationController
 
   private
 
+  def paginate_params
+    params.permit(:page)
+  end
+  
   # Use callbacks to share common setup or constraints between actions.
   def set_post
     @post = Post.find(params[:id])
